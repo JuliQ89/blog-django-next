@@ -1,35 +1,26 @@
-# /backend/Dockerfile
+FROM python:3.11.4-slim-buster
 
-# Use a lightweight Python image
-FROM python:3.10-alpine
+WORKDIR /usr/src/app
 
-# Set environment variables to ensure Python outputs are directed to the console and no bytecode files are generated
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
 
-# Set the working directory for the container
-WORKDIR /app/backend
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# Copy the Python dependency file into the container
-COPY requirements.txt .
+# install system dependencies
+RUN apt-get update && apt-get install -y netcat libpq-dev python-dev
 
-# Install system dependencies required for GeoDjango, including compilation dependencies and geospatial libraries
-RUN apk update && \
-    apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev python3-dev && \
-    apk add --no-cache geos gdal proj binutils postgresql-client && \
-    pip install --no-cache-dir -r requirements.txt && \
-    apk del .build-deps
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
 
-# Copy the entire project into the container
+# copy entrypoint.sh
+COPY ./entrypoint.sh .
+RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
+
+# copy project
 COPY . .
 
-# Copy the wait-for-postgres.sh script into the container and make it executable
-COPY wait-for-postgres.sh /wait-for-postgres.sh
-RUN chmod +x /wait-for-postgres.sh
-
-# Copy the entrypoint.sh script into the container and make it executable
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Set the container's entrypoint to the entrypoint.sh script
-ENTRYPOINT ["/entrypoint.sh"]
+# # run entrypoint.sh
+# ENTRYPOINT ["/usr/src/app/entrypoint.sh"]

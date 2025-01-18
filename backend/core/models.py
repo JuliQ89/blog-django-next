@@ -1,6 +1,7 @@
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 from accounts.models import User
+import uuid
 
 
 class Tag(models.Model):
@@ -17,6 +18,7 @@ class Post(models.Model):
     content = CKEditor5Field('Text', config_name='extends')
     created_at = models.DateTimeField(auto_now_add=True)
     liked = models.ManyToManyField(User, related_name="user_liked")
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     @property
     def likedCount(self):
