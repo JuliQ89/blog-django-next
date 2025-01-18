@@ -1,0 +1,12 @@
+# Virtual environments
+venv/
+env/
+
+# Environment variables
+.env
+
+# Data directory
+data/
+
+# Static files
+**/static/
