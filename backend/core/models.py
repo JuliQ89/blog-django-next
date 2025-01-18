@@ -1,4 +1,5 @@
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field
 from accounts.models import User
 
 
@@ -13,7 +14,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     heading = models.CharField(max_length=255)
-    content = models.TextField()
+    content = CKEditor5Field('Text', config_name='extends')
     created_at = models.DateTimeField(auto_now_add=True)
     liked = models.ManyToManyField(User, related_name="user_liked")
 
