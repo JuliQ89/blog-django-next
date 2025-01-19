@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: "Playfair Display";
+    font-style: normal;
+    src: url(../assets/font/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf);
+  }
+}
+
 :root {
   --background: #f6f6f6;
   --darkFont: #171717;
@@ -12,4 +20,12 @@ body {
   background-color: var(--background);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.btn-filled {
+  @apply rounded-md bg-slate-800 py-2.5 px-5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none;
+}
+
+.btn-outlined {
+  @apply rounded-md bg-transparent py-2.5 px-5 border border-slate-800 hover:bg-slate-800 text-center text-sm text-slate-800 transition-all shadow-sm hover:shadow-lg focus:bg-slate-800 focus:shadow-none active:bg-slate-700 focus:text-white hover:text-white active:text-white active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none;
 }

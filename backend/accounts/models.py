@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-
 class User(AbstractUser):
     username = models.CharField(max_length=155)
     email = models.EmailField(unique=True)
@@ -16,8 +15,9 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
-    image = models.ImageField()
-    bio = models.TextField()
+    image = models.ImageField(null=True, blank=True)
+    bio = models.TextField(null=True, blank=True, default="Dieser Benutzer hat noch keine Bio.")
 
     def __str__(self):
         return f"{self.user.username} - Profile"
+    

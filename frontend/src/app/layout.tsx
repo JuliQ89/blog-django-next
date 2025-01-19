@@ -13,10 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de">
-      <body>
-        <ReduxProvider>{children}</ReduxProvider>
-      </body>
+    <html lang="de" className="min-h-screen">
+      <body className="min-h-screen">{children}</body>
     </html>
   );
 }

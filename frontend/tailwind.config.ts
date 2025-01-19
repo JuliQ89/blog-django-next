@@ -11,6 +11,9 @@ export default {
       colors: {
         darkFont: "#171717",
       },
+      fontFamily: {
+        playfairDisplay: "Playfair Display",
+      },
     },
   },
   plugins: [],
