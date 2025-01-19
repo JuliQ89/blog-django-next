@@ -14,10 +14,10 @@ class User(AbstractUser):
     
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
     bio = models.TextField(null=True, blank=True, default="Dieser Benutzer hat noch keine Bio.")
 
     def __str__(self):
-        return f"{self.user.username} - Profile"
+        return f"{self.user.username if self.user else 'Anonymous'} - Profile"
     

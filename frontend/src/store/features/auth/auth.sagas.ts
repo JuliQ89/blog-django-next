@@ -2,8 +2,8 @@ import { put, call, takeLatest } from "redux-saga/effects";
 import { axiosInstance } from "@/utils/axios";
 import { loginSuccess, logoutSuccess } from "./auth.slice";
 import Cookies from "js-cookie";
-import { ActionType } from "@/utils/types";
-import { authActionTypes } from "./auth.action";
+import { ActionType, UserI } from "@/utils/types";
+import { authActionTypes, login } from "./auth.action";
 
 // LOGIN
 function* loginSaga(action: ActionType) {
@@ -24,6 +24,29 @@ function* loginSaga(action: ActionType) {
 
 export function* watcherLoginSaga() {
   yield takeLatest(authActionTypes.LOGIN, loginSaga);
+}
+
+// CREATE_ACCOUNT
+function* createAccountSaga(action: {
+  type: string;
+  payload: { email: string; password: string };
+}) {
+  try {
+    const response: { data: UserI } = yield call(
+      axiosInstance.post,
+      "/api/auth/create_user",
+      action.payload
+    );
+    yield put(
+      login({ email: action.payload.email, password: action.payload.password })
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* watcherCreateAccountSaga() {
+  yield takeLatest(authActionTypes.CREATE_ACCOUNT, createAccountSaga);
 }
 
 // LOGOUT

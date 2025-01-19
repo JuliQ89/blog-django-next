@@ -5,9 +5,12 @@ export interface UserI {
   is_staff: false;
   joined_at: string;
   is_authenticated: true;
-  image: string;
-  bio: string;
-  id: 2;
+  profile: {
+    image: null | string;
+    bio: string;
+    id: number;
+  };
+  id: number;
 }
 
 export type ActionType = {

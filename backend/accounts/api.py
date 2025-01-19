@@ -19,8 +19,11 @@ def login(request, payload: LoginSchema):
             'is_staff': user.is_staff,
             'joined_at': str(user.joined_at),
             'is_authenticated': user.is_authenticated,
-            'image': str(user.profile.image), 
-            'bio': user.profile.bio,
+            'profile' : {
+                'image': str(user.profile.image), 
+                'bio': user.profile.bio,
+                'id': user.profile.id,
+            },
             'id': user.id,
         }
         access_token = str(refresh_token.access_token)

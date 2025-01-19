@@ -3,6 +3,7 @@ import {
   watcherLoginSaga,
   watcherLogoutSaga,
   watcherRefreshAccessTokenSaga,
+  watcherCreateAccountSaga,
 } from "./features/auth/auth.sagas";
 
 export function* rootSaga() {
@@ -10,5 +11,6 @@ export function* rootSaga() {
     watcherLoginSaga(),
     watcherLogoutSaga(),
     watcherRefreshAccessTokenSaga(),
+    watcherCreateAccountSaga(),
   ]);
 }

@@ -12,7 +12,7 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="user")
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     heading = models.CharField(max_length=255)
     content = CKEditor5Field('Text', config_name='extends')
@@ -29,7 +29,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

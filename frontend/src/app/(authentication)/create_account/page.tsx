@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { create_account } from "@/store/features/auth/auth.action";
 
 const CreateAccount = () => {
+  const dispatch = useDispatch();
   const initialFormValues = {
     username: "",
     email: "",
@@ -22,7 +25,7 @@ const CreateAccount = () => {
 
   const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formValues);
+    dispatch(create_account(formValues));
     setFormValues(initialFormValues);
   };
 
