@@ -42,7 +42,7 @@ export default function Home() {
               )
           )
           .map((post) => (
-            <Post key={post.id} post={post} />
+            <Post key={post.id} post={post} setSearchValue={setSearchValue} />
           ))}
       </div>
     </HeaderContentLayout>

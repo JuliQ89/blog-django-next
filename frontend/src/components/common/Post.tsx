@@ -9,7 +9,13 @@ import { AiFillLike } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { AiOutlineComment } from "react-icons/ai";
 
-const Post = ({ post }: { post: PostI }) => {
+const Post = ({
+  post,
+  setSearchValue,
+}: {
+  post: PostI;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
@@ -49,6 +55,10 @@ const Post = ({ post }: { post: PostI }) => {
           {post.tag.map((tag: TagI) => (
             <small
               className="text-slate-600 p-[0.3rem] bg-transparent rounded-md hover:bg-gray-200 border border-transparent hover:border-gray-400"
+              onClick={(e) => {
+                e.stopPropagation();
+                setSearchValue(tag.name);
+              }}
               key={tag.id}
             >
               #{tag.name}
