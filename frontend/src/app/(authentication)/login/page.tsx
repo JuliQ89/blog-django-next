@@ -1,9 +1,17 @@
 "use client";
 
+import { login } from "@/store/features/auth/auth.action";
 import Link from "next/link";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const initialFormValues = {
+    email: "",
+    password: "",
+  };
+
   const [formValues, setFormValues] = useState<{
     email: string;
     password: string;
@@ -15,6 +23,8 @@ const Login = () => {
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formValues);
+    dispatch(login(formValues));
+    setFormValues(initialFormValues);
   };
 
   return (

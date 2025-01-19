@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { logout } from "@/store/features/auth/auth.action";
 
 const HeaderSearchBar = () => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -46,6 +49,11 @@ const HeaderSearchBar = () => {
 };
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+
   return (
     <header className="w-full fixed top-0 left-0 right-0 bg-white py-3 flex items-center shadow-[0_1px_1px_rgba(0,0,0,0.066)]">
       <nav className="flex h-full items-center justify-between mx-32 w-full">
@@ -58,12 +66,20 @@ const Header = () => {
           <HeaderSearchBar />
         </div>
         <div className="h-full flex items-center gap-4">
-          <Link href="/login" className="btn-outlined">
-            Log in
-          </Link>
-          <Link href="/create_account" className="btn-filled">
-            Create account
-          </Link>
+          {isAuthenticated ? (
+            <button className="btn-outlined" onClick={() => dispatch(logout())}>
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link href="/login" className="btn-outlined">
+                Log in
+              </Link>
+              <Link href="/create_account" className="btn-filled">
+                Create Account
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>

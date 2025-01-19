@@ -4,6 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 
 const CreateAccount = () => {
+  const initialFormValues = {
+    username: "",
+    email: "",
+    password: "",
+  };
+
   const [formValues, setFormValues] = useState<{
     username: string;
     email: string;
@@ -17,6 +23,7 @@ const CreateAccount = () => {
   const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formValues);
+    setFormValues(initialFormValues);
   };
 
   return (
