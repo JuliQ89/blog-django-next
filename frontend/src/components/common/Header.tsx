@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { logout } from "@/store/features/auth/auth.action";
 
-const HeaderSearchBar = () => {
-  const [searchValue, setSearchValue] = useState<string>("");
-
-  const searchPosts = () => {
-    console.log(searchValue);
-  };
-
+const HeaderSearchBar = ({
+  searchValue,
+  setSearchValue,
+}: {
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   return (
     <div className="w-full max-w-[25rem] min-w-[200px] grow">
       <div className="relative flex items-center">
@@ -22,13 +22,11 @@ const HeaderSearchBar = () => {
           spellCheck={false}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          onKeyDown={(e) => e.key == "Enter" && searchPosts()}
         />
 
         <button
           className="rounded-md ml-2 bg-slate-800 p-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
-          onClick={searchPosts}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +46,13 @@ const HeaderSearchBar = () => {
   );
 };
 
-const Header = () => {
+const Header = ({
+  searchValue,
+  setSearchValue,
+}: {
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -63,7 +67,10 @@ const Header = () => {
               Blog
             </h1>
           </Link>
-          <HeaderSearchBar />
+          <HeaderSearchBar
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+          />
         </div>
         <div className="h-full flex items-center gap-4">
           {isAuthenticated ? (
