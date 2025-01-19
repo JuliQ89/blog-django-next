@@ -9,7 +9,7 @@ post_router = Router(tags=["Post"])
 
 @post_router.get("/", response=List[PostSchemaOut])
 def getPosts(request):
-    return Post.objects.all()
+    return Post.objects.all() 
 
 
 # Comment

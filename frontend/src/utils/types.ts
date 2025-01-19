@@ -17,3 +17,27 @@ export type ActionType = {
   type: string;
   payload: {};
 };
+
+export interface CommentI {
+  user: { id: number };
+  created_at: string;
+  text: string;
+  id: number;
+}
+
+export interface TagI {
+  name: string;
+  id: number;
+}
+
+export interface PostI {
+  user: UserI;
+  tag: TagI[];
+  content: string;
+  heading: string;
+  created_at: string;
+  likedCount: number;
+  liked: { id: number }[];
+  comments: CommentI[];
+  id: string;
+}

@@ -4,11 +4,24 @@ import LoginLayout from "@/components/layout/LoginLayout";
 // import type { Metadata } from "next";
 import "./globals.css";
 import ReduxProvider from "@/store/ReduxProvider";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getPosts } from "@/store/features/posts/posts.action";
 
 // export const metadata: Metadata = {
 //   title: "Blog",
 //   description: "Blog application",
 // };
+
+const DispatchReduxActions = ({ children }: { children: React.ReactNode }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
+
+  return <>{children}</>;
+};
 
 export default function RootLayout({
   children,
@@ -19,7 +32,9 @@ export default function RootLayout({
     <html lang="de" className="min-h-screen">
       <body className="min-h-screen">
         <ReduxProvider>
-          <LoginLayout>{children}</LoginLayout>
+          <LoginLayout>
+            <DispatchReduxActions>{children}</DispatchReduxActions>
+          </LoginLayout>
         </ReduxProvider>
       </body>
     </html>
