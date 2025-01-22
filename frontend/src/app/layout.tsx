@@ -30,6 +30,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" className="min-h-screen">
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Blog" />
+        <title>Blog</title>
+      </head>
       <body className="min-h-screen">
         <ReduxProvider>
           <LoginLayout>

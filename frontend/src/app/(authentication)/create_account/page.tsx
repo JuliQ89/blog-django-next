@@ -4,9 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { create_account } from "@/store/features/auth/auth.action";
+import { useRouter } from "next/navigation";
 
 const CreateAccount = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const initialFormValues = {
     username: "",
     email: "",
@@ -27,6 +29,7 @@ const CreateAccount = () => {
     e.preventDefault();
     dispatch(create_account(formValues));
     setFormValues(initialFormValues);
+    router.push("/");
   };
 
   return (

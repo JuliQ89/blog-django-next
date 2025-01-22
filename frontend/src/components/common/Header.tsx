@@ -1,18 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { logout } from "@/store/features/auth/auth.action";
+import { searchPosts } from "@/store/features/posts/posts.slice";
 
-const HeaderSearchBar = ({
-  searchValue,
-  setSearchValue,
-}: {
-  searchValue: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+const HeaderSearchBar = () => {
+  const dispatch = useDispatch();
+  const searchValue = useSelector(
+    (state: RootState) => state.posts.searchValue
+  );
+
   return (
     <div className="w-full max-w-[25rem] min-w-[200px] grow">
       <div className="relative flex items-center">
@@ -21,7 +20,7 @@ const HeaderSearchBar = ({
           placeholder="Search Blogs..."
           spellCheck={false}
           value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(e) => dispatch(searchPosts(e.target.value))}
         />
 
         <button
@@ -46,13 +45,11 @@ const HeaderSearchBar = ({
   );
 };
 
-const Header = ({
-  searchValue,
-  setSearchValue,
-}: {
-  searchValue: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+interface HeaderI {
+  hasSearchBar?: boolean;
+}
+
+const Header = ({ hasSearchBar = true }: HeaderI) => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -67,16 +64,21 @@ const Header = ({
               Blog
             </h1>
           </Link>
-          <HeaderSearchBar
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-          />
+          {hasSearchBar && <HeaderSearchBar />}
         </div>
         <div className="h-full flex items-center gap-4">
           {isAuthenticated ? (
-            <button className="btn-outlined" onClick={() => dispatch(logout())}>
-              Logout
-            </button>
+            <>
+              <button
+                className="btn-outlined"
+                onClick={() => dispatch(logout())}
+              >
+                Logout
+              </button>
+              <Link href="/new-post" className="btn-filled">
+                Create Post
+              </Link>
+            </>
           ) : (
             <>
               <Link href="/login" className="btn-outlined">

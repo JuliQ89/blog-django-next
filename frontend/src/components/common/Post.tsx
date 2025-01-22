@@ -6,16 +6,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineComment } from "react-icons/ai";
+import { searchPosts } from "@/store/features/posts/posts.slice";
 
-const Post = ({
-  post,
-  setSearchValue,
-}: {
-  post: PostI;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+const Post = ({ post }: { post: PostI }) => {
+  const dispatch = useDispatch();
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
@@ -57,7 +53,7 @@ const Post = ({
               className="text-slate-600 p-[0.3rem] bg-transparent rounded-md hover:bg-gray-200 border border-transparent hover:border-gray-400"
               onClick={(e) => {
                 e.stopPropagation();
-                setSearchValue(tag.name);
+                dispatch(searchPosts(tag.name));
               }}
               key={tag.id}
             >

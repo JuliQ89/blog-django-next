@@ -2,18 +2,18 @@ import Header from "../common/Header";
 
 interface HeaderContentLayoutI {
   children?: React.ReactNode;
-  searchValue: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  headerProps?: {
+    hasSearchBar?: boolean;
+  };
 }
 
 const HeaderContentLayout = ({
-  searchValue,
-  setSearchValue,
   children,
+  headerProps,
 }: HeaderContentLayoutI) => {
   return (
     <div className="w-full min-h-screen">
-      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
+      <Header {...headerProps} />
       <div className="mt-[66px] w-full min-h-screen">{children}</div>
     </div>
   );

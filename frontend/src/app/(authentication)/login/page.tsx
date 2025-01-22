@@ -2,11 +2,13 @@
 
 import { login } from "@/store/features/auth/auth.action";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const initialFormValues = {
     email: "",
     password: "",
@@ -25,6 +27,7 @@ const Login = () => {
     console.log(formValues);
     dispatch(login(formValues));
     setFormValues(initialFormValues);
+    router.push("/");
   };
 
   return (
