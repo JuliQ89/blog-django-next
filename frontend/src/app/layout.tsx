@@ -7,6 +7,7 @@ import ReduxProvider from "@/store/ReduxProvider";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getPosts } from "@/store/features/posts/posts.action";
+import { getTags } from "@/store/features/tags/tags.action";
 
 // export const metadata: Metadata = {
 //   title: "Blog",
@@ -18,6 +19,7 @@ const DispatchReduxActions = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     dispatch(getPosts());
+    dispatch(getTags());
   }, [dispatch]);
 
   return <>{children}</>;

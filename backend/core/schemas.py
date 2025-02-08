@@ -38,4 +38,8 @@ class PostSchemaOut(Schema):
     comments: List[CommentSchemaOut]
     id: uuid.UUID
 
+class PostSchemaIn(Schema):
+    heading: str
+    content: str
+    tags: List[int]
 

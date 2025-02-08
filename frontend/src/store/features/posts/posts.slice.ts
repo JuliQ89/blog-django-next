@@ -38,9 +38,12 @@ export const postsSlice = createSlice({
           optimizeSearchValue(post.user.username).includes(searchValue)
       );
     },
+    createPostSuccess: (state, action) => {
+      state.posts.push(action.payload)
+    }
   },
 });
 
-export const { getPostsSuccess, searchPosts } = postsSlice.actions;
+export const { getPostsSuccess, searchPosts, createPostSuccess } = postsSlice.actions;
 
 export default postsSlice.reducer;

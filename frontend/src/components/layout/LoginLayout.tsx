@@ -30,7 +30,6 @@ const LoginLayout = ({ children }: LoginLayoutI) => {
 
     try {
       dispatch(refreshAccessToken(refresh_token));
-      console.log("Logged In");
       dispatch(loginSuccess(access_token));
     } catch (error) {
       console.log(error);

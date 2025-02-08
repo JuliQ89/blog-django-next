@@ -1,3 +1,5 @@
+import internal from "stream";
+
 export interface UserI {
   username: string;
   first_name: string;
@@ -40,4 +42,9 @@ export interface PostI {
   liked: { id: number }[];
   comments: CommentI[];
   id: string;
+}
+
+export interface TagI {
+  name: string;
+  id: number
 }

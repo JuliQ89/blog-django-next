@@ -17,7 +17,7 @@ class Post(models.Model):
     heading = models.CharField(max_length=255)
     content = CKEditor5Field('Text', config_name='extends')
     created_at = models.DateTimeField(auto_now_add=True)
-    liked = models.ManyToManyField(User, related_name="user_liked")
+    liked = models.ManyToManyField(User, related_name="user_liked", null=True, blank=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     @property

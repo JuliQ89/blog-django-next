@@ -56,7 +56,7 @@ const Header = ({ hasSearchBar = true }: HeaderI) => {
   );
 
   return (
-    <header className="w-full fixed top-0 left-0 right-0 bg-white py-3 flex items-center shadow-[0_1px_1px_rgba(0,0,0,0.066)]">
+    <header className="w-full fixed top-0 left-0 right-0 bg-white py-3 flex items-center shadow-[0_1px_1px_rgba(0,0,0,0.066)] z-[100]">
       <nav className="flex h-full items-center justify-between mx-32 w-full">
         <div className="h-full flex items-center gap-12 grow">
           <Link href="/">

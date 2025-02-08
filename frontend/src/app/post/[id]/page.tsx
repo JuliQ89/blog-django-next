@@ -14,7 +14,7 @@ function Post() {
 
   return (
     <div className="p-8 flex flex-col gap-5">
-      <h1 className="text-3xl font-bold text-slate-900">{post?.heading}</h1>
+      <h1 className="text-5xl font-bold text-slate-900">{post?.heading}</h1>
       <div>{parse(post?.content || "")}</div>
     </div>
   );

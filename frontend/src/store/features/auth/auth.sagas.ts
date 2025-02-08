@@ -69,7 +69,7 @@ function* refreshAccessTokenSaga(action: ActionType) {
       refresh_token: action.payload,
     });
     Cookies.set("access_token", access_token.data.access_token);
-    yield put(loginSuccess(access_token));
+    yield put(loginSuccess(access_token.data.access_token));
   } catch (error) {
     console.log(error);
   }

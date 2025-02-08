@@ -1,7 +1,8 @@
 from ninja import Router
 from .models import Post, Tag, Comment
 from typing import List
-from .schemas import PostSchemaOut, TagSchemaOut, CommentSchemaOut
+from ninja_jwt.authentication import JWTAuth
+from .schemas import PostSchemaOut, PostSchemaIn, TagSchemaOut, CommentSchemaOut
 
 
 # Post
@@ -10,6 +11,13 @@ post_router = Router(tags=["Post"])
 @post_router.get("/", response=List[PostSchemaOut])
 def getPosts(request):
     return Post.objects.all() 
+
+@post_router.post("/", response=PostSchemaOut, auth=JWTAuth())
+def createPost(request, payload: PostSchemaIn):
+    post = Post.objects.create(heading=payload.heading, content=payload.content, user=request.user)
+    for tag in payload.tags:
+        post.tag.add(Tag.objects.get(id=tag))
+    return post
 
 
 # Comment

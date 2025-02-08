@@ -5,7 +5,8 @@ import {
   watcherRefreshAccessTokenSaga,
   watcherCreateAccountSaga,
 } from "./features/auth/auth.sagas";
-import { watcherGetPostsSaga } from "./features/posts/posts.sagas";
+import { watcherGetPostsSaga, watcherCreatePostSaga } from "./features/posts/posts.sagas";
+import { watcherGetTagsSaga } from "./features/tags/tags.sagas";
 
 export function* rootSaga() {
   yield all([
@@ -14,5 +15,7 @@ export function* rootSaga() {
     watcherRefreshAccessTokenSaga(),
     watcherCreateAccountSaga(),
     watcherGetPostsSaga(),
+    watcherCreatePostSaga(),
+    watcherGetTagsSaga()
   ]);
 }
