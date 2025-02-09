@@ -6,8 +6,11 @@ import { AiOutlineComment } from "react-icons/ai";
 import PostUserProfile from "./PostUserProfile";
 import Tag from "./Tag";
 import LikeBtn from "./LikeBtn";
+import { useRouter } from "next/navigation";
 
 const Post = ({ post }: { post: PostI }) => {
+  const router = useRouter();
+
   return (
     <Link href={`/post/${post.id}`} className="max-w-[60%]">
       <article className="rounded-md border border-slate-200 bg-white flex flex-col gap-3 p-6">
@@ -29,13 +32,17 @@ const Post = ({ post }: { post: PostI }) => {
         <div className="flex items-center justify-start gap-6">
           <LikeBtn post={post} />
 
-          <div
-            className="w-fit p-[0.3rem] bg-transparent rounded-md hover:bg-gray-200 text-slate-800 cursor-pointer flex items-center gap-2"
-            onClick={(e) => e.stopPropagation()}
+          <button
+            className="border-none outline-none w-fit p-[0.3rem] bg-transparent rounded-md hover:bg-gray-200 text-slate-800 cursor-pointer flex items-center gap-2"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              router.push(`/post/${post.id}#comments`);
+            }}
           >
             <AiOutlineComment size={25} />
             <span className="text-sm">{post.comments.length} Comments</span>
-          </div>
+          </button>
         </div>
       </article>
     </Link>

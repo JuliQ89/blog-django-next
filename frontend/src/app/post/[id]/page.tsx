@@ -126,7 +126,10 @@ function Post() {
           <div className="py-6 px-16">{parse(post?.content || "")}</div>
           <hr />
           {/* COMMENTS */}
-          <div className="w-full flex flex-col gap-4 py-6 px-16 pb-0">
+          <div
+            className="w-full flex flex-col gap-4 py-6 px-16 pb-0"
+            id="comments"
+          >
             <h2 className="font-bold text-2xl text-slate-900">
               Comments ({post?.comments.length})
             </h2>

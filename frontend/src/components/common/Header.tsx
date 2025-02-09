@@ -4,28 +4,50 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { logout } from "@/store/features/auth/auth.action";
-import { searchPosts } from "@/store/features/posts/posts.slice";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import useParams from "@/hooks/useParams";
+import { IoMdClose } from "react-icons/io";
 
 const HeaderSearchBar = () => {
-  const dispatch = useDispatch();
-  const searchValue = useSelector(
-    (state: RootState) => state.posts.searchValue
-  );
+  const { newQueryString } = useParams();
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search");
+  const [searchValue, setSearchValue] = useState<string>(search || "");
 
   return (
     <div className="w-full max-w-[25rem] min-w-[200px] grow">
-      <div className="relative flex items-center">
-        <input
-          className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pr-3 pl-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-          placeholder="Search Blogs..."
-          spellCheck={false}
-          value={searchValue}
-          onChange={(e) => dispatch(searchPosts(e.target.value))}
-        />
+      <form
+        className="relative flex items-center"
+        action="#"
+        onSubmit={(e) => {
+          e.preventDefault();
+          newQueryString("search", searchValue);
+        }}
+      >
+        <div className="relative w-full">
+          <input
+            className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+            placeholder="Search Blogs..."
+            spellCheck={false}
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          {searchValue.length > 0 && (
+            <button
+              onClick={() => setSearchValue("")}
+              type="button"
+              className="-translate-y-1/2 absolute top-1/2 right-3 flex items-center justify-center bg-transparent border-none outline-none cursor-pointer text-slate-800"
+            >
+              <IoMdClose />
+            </button>
+          )}
+        </div>
 
         <button
           className="rounded-md ml-2 bg-slate-800 p-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
+          type="submit"
+          onClick={() => newQueryString("search", searchValue)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +62,7 @@ const HeaderSearchBar = () => {
             />
           </svg>
         </button>
-      </div>
+      </form>
     </div>
   );
 };

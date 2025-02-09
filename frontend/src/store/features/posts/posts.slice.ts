@@ -2,19 +2,11 @@ import { PostI } from "@/utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface initialStateI {
-  searchValue: string;
   posts: PostI[];
-  filteredPosts: PostI[];
 }
 
 const initialState: initialStateI = {
-  searchValue: "",
   posts: [],
-  filteredPosts: [],
-};
-
-const optimizeSearchValue = (value: string) => {
-  return value.toLowerCase().trim();
 };
 
 const updateObj = (
@@ -33,20 +25,6 @@ export const postsSlice = createSlice({
   reducers: {
     getPostsSuccess: (state, action) => {
       state.posts = action.payload;
-      state.filteredPosts = action.payload;
-    },
-    searchPosts: (state, action) => {
-      state.searchValue = action.payload;
-
-      const searchValue = optimizeSearchValue(state.searchValue);
-      state.filteredPosts = state.posts.filter(
-        (post: PostI) =>
-          optimizeSearchValue(post.heading).includes(searchValue) ||
-          post.tag.some((obj) =>
-            optimizeSearchValue(obj.name).includes(searchValue)
-          ) ||
-          optimizeSearchValue(post.user.username).includes(searchValue)
-      );
     },
     createPostSuccess: (state, action) => {
       state.posts.push(action.payload);
@@ -55,7 +33,6 @@ export const postsSlice = createSlice({
       state.posts = state.posts.filter((post) => post.id !== action.payload.id);
     },
     updatePostLikedSuccess: (state, action) => {
-      updateObj(state.filteredPosts, action.payload);
       updateObj(state.posts, action.payload);
     },
     createCommentSuccess: (state, action) => {
@@ -71,7 +48,6 @@ export const postsSlice = createSlice({
 
 export const {
   getPostsSuccess,
-  searchPosts,
   createPostSuccess,
   updatePostLikedSuccess,
   createCommentSuccess,
