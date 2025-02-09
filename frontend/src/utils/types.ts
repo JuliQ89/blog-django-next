@@ -21,9 +21,12 @@ export type ActionType = {
 };
 
 export interface CommentI {
-  user: { id: number };
+  user: UserI;
   created_at: string;
   text: string;
+  post: {
+    id: string;
+  };
   id: number;
 }
 
@@ -46,5 +49,5 @@ export interface PostI {
 
 export interface TagI {
   name: string;
-  id: number
+  id: number;
 }

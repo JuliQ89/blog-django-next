@@ -3,7 +3,7 @@ from ninja import Router
 from .models import Post, Tag, Comment
 from typing import List
 from ninja_jwt.authentication import JWTAuth
-from .schemas import PostSchemaOut, PostSchemaIn, TagSchemaOut, CommentSchemaOut
+from .schemas import PostSchemaOut, PostSchemaIn, TagSchemaOut, CommentSchemaOut, CommentSchemaIn
 import uuid
 
 
@@ -21,7 +21,6 @@ def createPost(request, payload: PostSchemaIn):
         post.tag.add(Tag.objects.get(id=tag))
     return post
 
-# ==================== FUNKTIONIERT NOCH NICHT ==================== 
 @post_router.put("/{id}/", response=PostSchemaOut, auth=JWTAuth())
 def updatePostLiked(request, id:uuid.UUID):
     post = get_object_or_404(Post, id=id)
@@ -31,6 +30,12 @@ def updatePostLiked(request, id:uuid.UUID):
         post.liked.add(request.user)
     return post
 
+@post_router.delete("/{id}/", response=dict, auth=JWTAuth())
+def deletePost(request, id:uuid.UUID):
+    post = get_object_or_404(Post, id=id)
+    post.delete()
+    return {"success": True}
+
 
 # Comment
 comment_router = Router(tags=["Comment"])
@@ -38,6 +43,12 @@ comment_router = Router(tags=["Comment"])
 @comment_router.get("/", response=List[CommentSchemaOut])
 def getComments(request):
     return Comment.objects.all()
+
+@comment_router.post("/", response=CommentSchemaOut, auth=JWTAuth())
+def createComment(request, payload: CommentSchemaIn):
+    post = get_object_or_404(Post, id=payload.post_id)
+    comment = Comment.objects.create(user=request.user, text=payload.text, post=post)
+    return comment
 
 
 # Tag

@@ -14,7 +14,6 @@ export default function Home() {
 
   return (
     <HeaderContentLayout>
-      {isAuthenticated && <h2>{user?.username}</h2>}
       <div className="flex flex-col gap-5 p-5">
         {posts.map((post) => (
           <Post key={post.id} post={post} />

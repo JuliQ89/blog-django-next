@@ -51,9 +51,20 @@ export const postsSlice = createSlice({
     createPostSuccess: (state, action) => {
       state.posts.push(action.payload);
     },
+    deletePostSuccess: (state, action) => {
+      state.posts = state.posts.filter((post) => post.id !== action.payload.id);
+    },
     updatePostLikedSuccess: (state, action) => {
       updateObj(state.filteredPosts, action.payload);
       updateObj(state.posts, action.payload);
+    },
+    createCommentSuccess: (state, action) => {
+      const post = state.posts.find(
+        (post) => post.id == action.payload.post.id
+      );
+      if (post) {
+        post.comments.push(action.payload);
+      }
     },
   },
 });
@@ -63,6 +74,8 @@ export const {
   searchPosts,
   createPostSuccess,
   updatePostLikedSuccess,
+  createCommentSuccess,
+  deletePostSuccess,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;

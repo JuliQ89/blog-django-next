@@ -1,45 +1,20 @@
 "use client";
 
-import { RootState } from "@/store/store";
 import { PostI, TagI } from "@/utils/types";
 import Link from "next/link";
-import { AiOutlineLike } from "react-icons/ai";
-import { AiFillLike } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineComment } from "react-icons/ai";
-import { searchPosts } from "@/store/features/posts/posts.slice";
-import { updatePostLiked } from "@/store/features/posts/posts.action";
+import PostUserProfile from "./PostUserProfile";
+import Tag from "./Tag";
+import LikeBtn from "./LikeBtn";
 
 const Post = ({ post }: { post: PostI }) => {
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
-  const user_id = useSelector((state: RootState) => state.auth.user?.id);
-  const isLiked = post.liked.some((obj) => obj.id == user_id);
-
-  const toggleLike = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updatePostLiked({ id: post.id }));
-  };
-
   return (
     <Link href={`/post/${post.id}`} className="max-w-[60%]">
       <article className="rounded-md border border-slate-200 bg-white flex flex-col gap-3 p-6">
-        <div className="flex items-center gap-2">
-          <div className="rounded-full w-9 h-9 bg-slate-500"></div>
-          <div className="flex flex-col">
-            <h3 className="text-slate-800 font-medium text-[0.9rem] leading-6">
-              {post.user.username}
-            </h3>
-            <span className="text-slate-800 text-sm">
-              {new Date(post.created_at).toLocaleDateString("de-de", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              })}
-            </span>
-          </div>
-        </div>
+        <PostUserProfile
+          username={post.user.username}
+          created_at={post.created_at}
+        />
 
         <h1 className="text-3xl font-bold text-slate-900 hover:text-slate-600">
           {post.heading}
@@ -47,40 +22,12 @@ const Post = ({ post }: { post: PostI }) => {
 
         <div className="flex items-center justify-start gap-4">
           {post.tag.map((tag: TagI) => (
-            <small
-              className="text-slate-600 p-[0.3rem] bg-transparent rounded-md hover:bg-gray-200 border border-transparent hover:border-gray-400"
-              onClick={(e) => {
-                e.stopPropagation();
-                dispatch(searchPosts(tag.name));
-              }}
-              key={tag.id}
-            >
-              #{tag.name}
-            </small>
+            <Tag name={tag.name} id={tag.id} key={tag.id} />
           ))}
         </div>
 
         <div className="flex items-center justify-start gap-6">
-          <div
-            className="w-fit p-[0.3rem] bg-transparent rounded-md hover:bg-gray-200 relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <label
-              htmlFor={`isliked-${post.id}`}
-              className="flex items-center gap-2 text-slate-800 cursor-pointer"
-            >
-              {isLiked ? <AiFillLike size={25} /> : <AiOutlineLike size={25} />}{" "}
-              <span className="text-sm">{post.likedCount} Likes</span>
-            </label>
-            <input
-              type="checkbox"
-              name="isliked"
-              id={`isliked-${post.id}`}
-              className="absolute hidden"
-              checked={isLiked}
-              onChange={isAuthenticated ? toggleLike : () => {}}
-            />
-          </div>
+          <LikeBtn post={post} />
 
           <div
             className="w-fit p-[0.3rem] bg-transparent rounded-md hover:bg-gray-200 text-slate-800 cursor-pointer flex items-center gap-2"
