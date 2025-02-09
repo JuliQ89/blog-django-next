@@ -52,6 +52,12 @@ function Post() {
     router.push("/");
   };
 
+  const confirmTitle = post?.heading
+    .toLowerCase()
+    .slice(0, 25)
+    .trim()
+    .replaceAll(" ", "-");
+
   return (
     <HeaderContentLayout>
       <div className="p-8 flex justify-center min-h-screen">
@@ -74,8 +80,7 @@ function Post() {
                   </button>
                   <Modal isOpened={isOpened} setIsOpened={setIsOpened}>
                     <small className="font-medium">
-                      Type "{post?.heading.toLowerCase().replace(" ", "-")}" to
-                      confirm
+                      Type "{confirmTitle}" to confirm
                     </small>
                     <input
                       type="text"
@@ -87,12 +92,13 @@ function Post() {
                       }
                     />
                     <button
-                      onClick={handleDeletePost}
+                      onClick={
+                        confirmDeleteInputValue === confirmTitle
+                          ? handleDeletePost
+                          : () => {}
+                      }
                       disabled={
-                        confirmDeleteInputValue ===
-                        post?.heading.toLowerCase().replace(" ", "-")
-                          ? false
-                          : true
+                        confirmDeleteInputValue === confirmTitle ? false : true
                       }
                       className="bg-red-700 mt-4 flex items-center justify-center gap-1 text-white font-medium p-[0.35rem] rounded-[4px] disabled:bg-red-300 cursor-pointer"
                     >
