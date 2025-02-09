@@ -5,7 +5,11 @@ import {
   watcherRefreshAccessTokenSaga,
   watcherCreateAccountSaga,
 } from "./features/auth/auth.sagas";
-import { watcherGetPostsSaga, watcherCreatePostSaga } from "./features/posts/posts.sagas";
+import {
+  watcherGetPostsSaga,
+  watcherCreatePostSaga,
+  watcherUpdatePostLikedSaga,
+} from "./features/posts/posts.sagas";
 import { watcherGetTagsSaga } from "./features/tags/tags.sagas";
 
 export function* rootSaga() {
@@ -16,6 +20,7 @@ export function* rootSaga() {
     watcherCreateAccountSaga(),
     watcherGetPostsSaga(),
     watcherCreatePostSaga(),
-    watcherGetTagsSaga()
+    watcherUpdatePostLikedSaga(),
+    watcherGetTagsSaga(),
   ]);
 }

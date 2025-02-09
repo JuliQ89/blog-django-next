@@ -17,6 +17,16 @@ const optimizeSearchValue = (value: string) => {
   return value.toLowerCase().trim();
 };
 
+const updateObj = (
+  list: { id: string | number }[],
+  newObj: { id: string | number }
+) => {
+  const targetObjIndex = list.findIndex((obj) => obj.id === newObj.id);
+  if (targetObjIndex !== -1) {
+    list[targetObjIndex] = newObj;
+  }
+};
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState: initialState,
@@ -39,11 +49,20 @@ export const postsSlice = createSlice({
       );
     },
     createPostSuccess: (state, action) => {
-      state.posts.push(action.payload)
-    }
+      state.posts.push(action.payload);
+    },
+    updatePostLikedSuccess: (state, action) => {
+      updateObj(state.filteredPosts, action.payload);
+      updateObj(state.posts, action.payload);
+    },
   },
 });
 
-export const { getPostsSuccess, searchPosts, createPostSuccess } = postsSlice.actions;
+export const {
+  getPostsSuccess,
+  searchPosts,
+  createPostSuccess,
+  updatePostLikedSuccess,
+} = postsSlice.actions;
 
 export default postsSlice.reducer;

@@ -3,12 +3,12 @@
 import { RootState } from "@/store/store";
 import { PostI, TagI } from "@/utils/types";
 import Link from "next/link";
-import { useState } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineComment } from "react-icons/ai";
 import { searchPosts } from "@/store/features/posts/posts.slice";
+import { updatePostLiked } from "@/store/features/posts/posts.action";
 
 const Post = ({ post }: { post: PostI }) => {
   const dispatch = useDispatch();
@@ -16,12 +16,10 @@ const Post = ({ post }: { post: PostI }) => {
     (state: RootState) => state.auth.isAuthenticated
   );
   const user_id = useSelector((state: RootState) => state.auth.user?.id);
-  const [isLiked, setIsLiked] = useState<boolean>(
-    post.liked.some((obj) => obj.id == user_id)
-  );
+  const isLiked = post.liked.some((obj) => obj.id == user_id);
 
   const toggleLike = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsLiked(e.target.checked);
+    dispatch(updatePostLiked({ id: post.id }));
   };
 
   return (
