@@ -12,7 +12,7 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="user")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="posts")
     tag = models.ManyToManyField(Tag)
     heading = models.CharField(max_length=255)
     content = CKEditor5Field('Text', config_name='extends')

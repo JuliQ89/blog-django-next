@@ -32,5 +32,3 @@ class CreateUserSchema(Schema):
     username: str
     email: str
     password: str    
-
-

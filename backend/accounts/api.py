@@ -1,8 +1,10 @@
-from ninja import Router
+from ninja import Router, Schema
 from django.contrib.auth import authenticate
 from .schemas import LoginSchema, RefreshTokenSchema, CreateUserSchema, UserSchemaOut
 from ninja_jwt.tokens import RefreshToken
 from .models import User
+from core.schemas import PostSchemaOut
+from typing import List
 
 
 auth_router = Router(tags=["Auth"]) 
@@ -48,3 +50,14 @@ def createUser(request, payload: CreateUserSchema):
    user.save()
 
    return user
+
+class UserPostsSchema(Schema):
+    user: UserSchemaOut
+    posts: List[PostSchemaOut]
+
+
+@auth_router.get("/user/{id}/", response=UserPostsSchema)
+def getUserData(request, id: int):
+   user = User.objects.get(id=id)
+   posts = user.posts
+   return {"user": user, "posts": posts}
