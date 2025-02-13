@@ -25,15 +25,6 @@ const PostUserProfile = ({
       onClick={redirectToUserProfilePage}
     >
       {Profile}
-      {/* <div className="rounded-full w-9 h-9 bg-slate-500">
-        {profile && (
-          <img
-            src={`http://localhost:8000${profile}`}
-            className="w-full h-full rounded-[inherit]"
-            alt=""
-          />
-        )}
-      </div> */}
       <div className="flex flex-col">
         <h3 className="text-slate-800 font-medium text-[0.9rem] leading-6">
           {username}

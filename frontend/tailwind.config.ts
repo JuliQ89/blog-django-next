@@ -14,9 +14,6 @@ export default {
       fontFamily: {
         playfairDisplay: "Playfair Display",
       },
-      borderRadius: {
-        inherit: "inherit",
-      },
     },
   },
   plugins: [],
