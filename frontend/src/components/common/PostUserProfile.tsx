@@ -1,14 +1,39 @@
+import useUserProfile from "@/hooks/useUserProfile";
 import React from "react";
 
 interface PostUserProfileI {
+  profile: string | null;
   username: string;
   created_at: string;
+  user_id: number;
 }
 
-const PostUserProfile = ({ username, created_at }: PostUserProfileI) => {
+const PostUserProfile = ({
+  username,
+  created_at,
+  profile,
+  user_id,
+}: PostUserProfileI) => {
+  const { Profile, redirectToUserProfilePage } = useUserProfile({
+    profile: profile,
+    user_id: user_id,
+  });
+
   return (
-    <div className="flex items-center gap-2">
-      <div className="rounded-full w-9 h-9 bg-slate-500"></div>
+    <div
+      className="flex items-center gap-2 w-fit cursor-pointer"
+      onClick={redirectToUserProfilePage}
+    >
+      {Profile}
+      {/* <div className="rounded-full w-9 h-9 bg-slate-500">
+        {profile && (
+          <img
+            src={`http://localhost:8000${profile}`}
+            className="w-full h-full rounded-[inherit]"
+            alt=""
+          />
+        )}
+      </div> */}
       <div className="flex flex-col">
         <h3 className="text-slate-800 font-medium text-[0.9rem] leading-6">
           {username}

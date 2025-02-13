@@ -15,6 +15,8 @@ const Post = ({ post }: { post: PostI }) => {
     <Link href={`/post/${post.id}`} className="max-w-[60%]">
       <article className="rounded-md border border-slate-200 bg-white flex flex-col gap-3 p-6">
         <PostUserProfile
+          user_id={post.user.id}
+          profile={post.user.profile.image}
           username={post.user.username}
           created_at={post.created_at}
         />

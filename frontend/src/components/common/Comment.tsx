@@ -1,9 +1,16 @@
+import useUserProfile from "@/hooks/useUserProfile";
 import { CommentI } from "@/utils/types";
 
 const Comment = ({ comment }: { comment: CommentI }) => {
+  const { Profile } = useUserProfile({
+    profile: comment.user.profile.image,
+    user_id: comment.user.id,
+    redirect: true,
+  });
+
   return (
     <div className="w-full flex gap-3 items-start">
-      <div className="rounded-full w-9 h-9 bg-slate-500"></div>
+      {Profile}
 
       <div className="rounded-md border border-slate-200 grow flex flex-col gap-2 p-5">
         <div className="flex items-center gap-2">

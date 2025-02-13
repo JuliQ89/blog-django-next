@@ -66,6 +66,8 @@ function Post() {
             <div className="w-full flex items-center justify-between">
               {post && (
                 <PostUserProfile
+                  user_id={post.user.id}
+                  profile={post.user.profile.image}
                   created_at={post.created_at}
                   username={post.user.username}
                 />

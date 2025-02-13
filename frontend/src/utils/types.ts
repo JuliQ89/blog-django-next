@@ -8,7 +8,7 @@ export interface UserI {
   joined_at: string;
   is_authenticated: true;
   profile: {
-    image: null | string;
+    image: string | null;
     bio: string;
     id: number;
   };
