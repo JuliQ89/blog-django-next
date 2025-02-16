@@ -4,6 +4,7 @@ import { postsActionTypes } from "./posts.action";
 import {
   createCommentSuccess,
   createPostSuccess,
+  deleteCommentSuccess,
   deletePostSuccess,
   getPostsSuccess,
   updatePostLikedSuccess,
@@ -97,4 +98,29 @@ function* createCommentSaga(action: any) {
 
 export function* watcherCreateCommentSagaSaga() {
   yield takeLatest(postsActionTypes.CREATE_COMMENT, createCommentSaga);
+}
+
+// DELETE_COMMENT
+function* deleteCommentSaga(action: any) {
+  try {
+    const response: { data: { success: boolean } } = yield call(
+      axiosInstance.delete,
+      `/api/comments/${action.payload.comment_id}/`
+    );
+    const deleted = response.data.success;
+    console.log(response.data);
+    yield put(
+      deleteCommentSuccess({
+        comment_id: action.payload.comment_id,
+        post_id: action.payload.post_id,
+        success: deleted,
+      })
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* watcherDeleteCommentSaga() {
+  yield takeLatest(postsActionTypes.DELETE_COMMENT, deleteCommentSaga);
 }

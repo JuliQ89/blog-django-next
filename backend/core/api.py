@@ -50,6 +50,12 @@ def createComment(request, payload: CommentSchemaIn):
     comment = Comment.objects.create(user=request.user, text=payload.text, post=post)
     return comment
 
+@comment_router.delete("/{id}/", response=dict, auth=JWTAuth())
+def deleteComment(request, id: int):
+    comment = get_object_or_404(Comment, id=id)
+    comment.delete()
+    return {"success": True}
+
 
 # Tag
 tag_router = Router(tags=["Tag"])

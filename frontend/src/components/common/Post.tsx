@@ -12,7 +12,7 @@ const Post = ({ post }: { post: PostI }) => {
   const router = useRouter();
 
   return (
-    <Link href={`/post/${post.id}`} className="max-w-[60%]">
+    <Link href={`/post/${post.id}`}>
       <article className="rounded-md border border-slate-200 bg-white flex flex-col gap-3 p-6">
         <PostUserProfile
           user_id={post.user.id}

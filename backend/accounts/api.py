@@ -61,3 +61,8 @@ def getUserData(request, id: int):
    user = User.objects.get(id=id)
    posts = user.posts
    return {"user": user, "posts": posts}
+
+@auth_router.get("/users/", response=List[UserSchemaOut])
+def getUsers(request):
+    users = User.objects.all()
+    return users

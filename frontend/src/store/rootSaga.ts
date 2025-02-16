@@ -11,8 +11,10 @@ import {
   watcherUpdatePostLikedSaga,
   watcherCreateCommentSagaSaga,
   watcherDeletePostSaga,
+  watcherDeleteCommentSaga,
 } from "./features/posts/posts.sagas";
 import { watcherGetTagsSaga } from "./features/tags/tags.sagas";
+import { watcherGetUsersSaga } from "./features/users/users.sagas";
 
 export function* rootSaga() {
   yield all([
@@ -25,6 +27,8 @@ export function* rootSaga() {
     watcherDeletePostSaga(),
     watcherUpdatePostLikedSaga(),
     watcherCreateCommentSagaSaga(),
+    watcherDeleteCommentSaga(),
     watcherGetTagsSaga(),
+    watcherGetUsersSaga(),
   ]);
 }

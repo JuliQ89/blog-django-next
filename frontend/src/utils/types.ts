@@ -1,5 +1,3 @@
-import internal from "stream";
-
 export interface UserI {
   username: string;
   first_name: string;
