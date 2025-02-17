@@ -12,6 +12,7 @@ import {
   watcherCreateCommentSagaSaga,
   watcherDeletePostSaga,
   watcherDeleteCommentSaga,
+  watcherUpdateCommentSaga,
 } from "./features/posts/posts.sagas";
 import { watcherGetTagsSaga } from "./features/tags/tags.sagas";
 import { watcherGetUsersSaga } from "./features/users/users.sagas";
@@ -28,6 +29,7 @@ export function* rootSaga() {
     watcherUpdatePostLikedSaga(),
     watcherCreateCommentSagaSaga(),
     watcherDeleteCommentSaga(),
+    watcherUpdateCommentSaga(),
     watcherGetTagsSaga(),
     watcherGetUsersSaga(),
   ]);

@@ -5,6 +5,7 @@ export const postsActionTypes = {
   UPDATE_POST_LIKED: "UPDATE_POST_LIKED",
   CREATE_COMMENT: "CREATE_COMMENT",
   DELETE_COMMENT: "DELETE_COMMENT",
+  UPDATE_COMMENT: "UPDATE_COMMENT",
 };
 
 export const getPosts = () => ({
@@ -40,5 +41,10 @@ export const deleteComment = (payload: {
   post_id: string;
 }) => ({
   type: postsActionTypes.DELETE_COMMENT,
+  payload,
+});
+
+export const updateComment = (payload: { id: number; text: string }) => ({
+  type: postsActionTypes.UPDATE_COMMENT,
   payload,
 });

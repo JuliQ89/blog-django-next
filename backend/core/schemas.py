@@ -20,6 +20,9 @@ class CommentSchemaOut(Schema):
     post: RelationUUIDSchema
     id: int
 
+class CommentUpdateSchemaIn(Schema):
+    text: str
+
 class CommentSchemaIn(Schema):
     text: str
     post_id:uuid.UUID

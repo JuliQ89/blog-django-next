@@ -3,7 +3,7 @@ from ninja import Router
 from .models import Post, Tag, Comment
 from typing import List
 from ninja_jwt.authentication import JWTAuth
-from .schemas import PostSchemaOut, PostSchemaIn, TagSchemaOut, CommentSchemaOut, CommentSchemaIn
+from .schemas import PostSchemaOut, PostSchemaIn, TagSchemaOut, CommentSchemaOut, CommentSchemaIn, CommentUpdateSchemaIn
 import uuid
 
 
@@ -48,6 +48,13 @@ def getComments(request):
 def createComment(request, payload: CommentSchemaIn):
     post = get_object_or_404(Post, id=payload.post_id)
     comment = Comment.objects.create(user=request.user, text=payload.text, post=post)
+    return comment
+
+@comment_router.put("/{id}/", response=CommentSchemaOut, auth=JWTAuth())
+def updateComment(request, payload: CommentUpdateSchemaIn, id:int):
+    comment = get_object_or_404(Comment, id=id)
+    comment.text = payload.text
+    comment.save()
     return comment
 
 @comment_router.delete("/{id}/", response=dict, auth=JWTAuth())

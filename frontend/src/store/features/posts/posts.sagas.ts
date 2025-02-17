@@ -7,6 +7,7 @@ import {
   deleteCommentSuccess,
   deletePostSuccess,
   getPostsSuccess,
+  updateCommentSuccess,
   updatePostLikedSuccess,
 } from "./posts.slice";
 
@@ -123,4 +124,23 @@ function* deleteCommentSaga(action: any) {
 
 export function* watcherDeleteCommentSaga() {
   yield takeLatest(postsActionTypes.DELETE_COMMENT, deleteCommentSaga);
+}
+
+// UPDATE_COMMENT
+function* updateCommentSaga(action: any) {
+  try {
+    const response: { data: {} } = yield call(
+      axiosInstance.put,
+      `/api/comments/${action.payload.id}/`,
+      { text: action.payload.text }
+    );
+    console.log(response.data);
+    yield put(updateCommentSuccess(response.data));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* watcherUpdateCommentSaga() {
+  yield takeLatest(postsActionTypes.UPDATE_COMMENT, updateCommentSaga);
 }

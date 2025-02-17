@@ -51,6 +51,12 @@ export const postsSlice = createSlice({
         (comment) => comment.id !== action.payload.comment_id
       );
     },
+    updateCommentSuccess: (state, action) => {
+      const postIndex = state.posts.findIndex(
+        (post) => post.id === action.payload.post.id
+      );
+      updateObj(state.posts[postIndex].comments, action.payload);
+    },
   },
 });
 
@@ -61,6 +67,7 @@ export const {
   createCommentSuccess,
   deletePostSuccess,
   deleteCommentSuccess,
+  updateCommentSuccess,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;
