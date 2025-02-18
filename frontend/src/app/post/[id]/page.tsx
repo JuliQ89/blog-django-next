@@ -12,9 +12,10 @@ import HeaderContentLayout from "@/components/layout/HeaderContentLayout";
 import Comment from "@/components/common/Comment";
 import { useState } from "react";
 import { createComment, deletePost } from "@/store/features/posts/posts.action";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Modal from "@/components/common/Modal";
 import useUserProfile from "@/hooks/useUserProfile";
+import Link from "next/link";
 
 function Post() {
   const params = useParams<{ id: string }>();
@@ -79,7 +80,13 @@ function Post() {
                   />
                 )}
                 {isAuthor && (
-                  <>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/post/edit/${post.id}/`}
+                      className="text-gray-700 p-[0.35rem] bg-transparent rounded-[4px] hover:bg-gray-200"
+                    >
+                      <AiOutlineEdit size={23} />
+                    </Link>
                     <button
                       onClick={() => setIsOpened(true)}
                       className="text-red-700 p-[0.35rem] bg-transparent rounded-[4px] hover:bg-red-200"
@@ -115,7 +122,7 @@ function Post() {
                         <AiOutlineDelete size={23} /> Delete
                       </button>
                     </Modal>
-                  </>
+                  </div>
                 )}
               </div>
               <div className="flex flex-col w-full gap-1">

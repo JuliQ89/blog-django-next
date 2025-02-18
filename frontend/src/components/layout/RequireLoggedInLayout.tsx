@@ -1,14 +1,14 @@
 "use client";
 
-import { useSelector } from "react-redux";
-import Link from "next/link";
 import { RootState } from "@/store/store";
+import Link from "next/link";
+import { useSelector } from "react-redux";
 
-interface LoggedInLayoutI {
-  children: React.ReactNode;
+interface RequireLoggedInLayoutI {
+  children?: React.ReactNode;
 }
 
-const LoggedInLayout = ({ children }: LoggedInLayoutI) => {
+const RequireLoggedInLayout = ({ children }: RequireLoggedInLayoutI) => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
@@ -25,4 +25,4 @@ const LoggedInLayout = ({ children }: LoggedInLayoutI) => {
   }
 };
 
-export default LoggedInLayout;
+export default RequireLoggedInLayout;
