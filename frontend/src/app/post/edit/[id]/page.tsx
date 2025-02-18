@@ -1,13 +1,15 @@
 "use client";
 
 import HeaderContentLayout from "@/components/layout/HeaderContentLayout";
+import { updatePost } from "@/store/features/posts/posts.action";
 import { RootState } from "@/store/store";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RichTextEditor } from "react-rich-text-editor-js";
 
 const EditPost = () => {
+  const dispatch = useDispatch();
   const params = useParams<{ id: string }>();
   const post = useSelector((state: RootState) => state.posts.posts).find(
     (post) => post.id === params.id
@@ -27,6 +29,19 @@ const EditPost = () => {
       setSelectedTags(post.tag.map((tag) => `#${tag.name}`));
     }
   }, [post]);
+
+  const handleUpdatePost = () => {
+    dispatch(
+      updatePost({
+        heading: title,
+        content: content,
+        tags: tags
+          .filter((tag) => selectedTags.includes(`#${tag.name}`))
+          .map((tag) => tag.id),
+        post_id: params.id,
+      })
+    );
+  };
 
   return (
     <HeaderContentLayout headerProps={{ hasSearchBar: false }}>
@@ -66,7 +81,7 @@ const EditPost = () => {
                 ))}
               </select>
               <button
-                onClick={() => {}}
+                onClick={handleUpdatePost}
                 className="btn-filled"
                 style={{ width: "fit-content" }}
               >

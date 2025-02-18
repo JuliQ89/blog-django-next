@@ -2,6 +2,7 @@ export const postsActionTypes = {
   GET_POSTS: "GET_POSTS",
   CREATE_POST: "CREATE_POST",
   DELETE_POST: "DELETE_POST",
+  UPDATE_POST: "UPDATE_POST",
   UPDATE_POST_LIKED: "UPDATE_POST_LIKED",
   CREATE_COMMENT: "CREATE_COMMENT",
   DELETE_COMMENT: "DELETE_COMMENT",
@@ -23,6 +24,16 @@ export const createPost = (payload: {
 
 export const deletePost = (payload: { id: string }) => ({
   type: postsActionTypes.DELETE_POST,
+  payload,
+});
+
+export const updatePost = (payload: {
+  heading: string;
+  content: string;
+  tags: number[];
+  post_id: string;
+}) => ({
+  type: postsActionTypes.UPDATE_POST,
   payload,
 });
 

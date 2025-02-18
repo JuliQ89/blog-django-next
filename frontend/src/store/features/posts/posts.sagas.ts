@@ -8,7 +8,7 @@ import {
   deletePostSuccess,
   getPostsSuccess,
   updateCommentSuccess,
-  updatePostLikedSuccess,
+  updatePostSuccess,
 } from "./posts.slice";
 
 // GET_POSTS
@@ -69,10 +69,10 @@ function* updatePostLikedSaga(action: any) {
   try {
     const response: { data: {} } = yield call(
       axiosInstance.put,
-      `/api/posts/${action.payload.id}/`
+      `/api/posts/liked/${action.payload.id}/`
     );
     console.log(response.data);
-    yield put(updatePostLikedSuccess(response.data));
+    yield put(updatePostSuccess(response.data));
   } catch (error) {
     console.log(error);
   }
@@ -80,6 +80,29 @@ function* updatePostLikedSaga(action: any) {
 
 export function* watcherUpdatePostLikedSaga() {
   yield takeLatest(postsActionTypes.UPDATE_POST_LIKED, updatePostLikedSaga);
+}
+
+// UPDATE_POST
+function* updatePostSaga(action: any) {
+  try {
+    const response: { data: {} } = yield call(
+      axiosInstance.put,
+      `/api/posts/${action.payload.post_id}/`,
+      {
+        content: action.payload.content,
+        heading: action.payload.heading,
+        tags: action.payload.tags,
+      }
+    );
+    console.log(response.data);
+    yield put(updatePostSuccess(response.data));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* watcherUpdatePostSaga() {
+  yield takeLatest(postsActionTypes.UPDATE_POST, updatePostSaga);
 }
 
 // CREATE_COMMENT

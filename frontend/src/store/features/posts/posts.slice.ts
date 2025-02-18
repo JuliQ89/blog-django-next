@@ -32,7 +32,7 @@ export const postsSlice = createSlice({
     deletePostSuccess: (state, action) => {
       state.posts = state.posts.filter((post) => post.id !== action.payload.id);
     },
-    updatePostLikedSuccess: (state, action) => {
+    updatePostSuccess: (state, action) => {
       updateObj(state.posts, action.payload);
     },
     createCommentSuccess: (state, action) => {
@@ -63,7 +63,7 @@ export const postsSlice = createSlice({
 export const {
   getPostsSuccess,
   createPostSuccess,
-  updatePostLikedSuccess,
+  updatePostSuccess,
   createCommentSuccess,
   deletePostSuccess,
   deleteCommentSuccess,
