@@ -38,6 +38,7 @@ def updatePost(request, payload: PostUpdateSchemaIn,id:uuid.UUID):
     post.tag.clear()
     for tag in payload.tags:
         post.tag.add(Tag.objects.get(id=tag))
+    post.save()
     return post
 
 @post_router.delete("/{id}/", response=dict, auth=JWTAuth())
