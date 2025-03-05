@@ -14,6 +14,7 @@ class Tag(models.Model):
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="posts")
     tag = models.ManyToManyField(Tag)
+    image = models.ImageField(null=True, blank=True, upload_to="post_images")
     heading = models.CharField(max_length=255)
     content = CKEditor5Field('Text', config_name='extends')
     created_at = models.DateTimeField(auto_now_add=True)

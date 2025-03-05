@@ -1,6 +1,6 @@
 from ninja import Schema
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 import uuid
 from accounts.schemas import UserSchemaOut
 
@@ -38,6 +38,7 @@ class TagSchemaOut(Schema):
 class PostSchemaOut(Schema):
     user: UserSchemaOut
     tag: List[TagSchemaOut]
+    image: Optional[str] = None
     content: str
     heading: str
     created_at: datetime
