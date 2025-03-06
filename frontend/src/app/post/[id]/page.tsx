@@ -16,6 +16,7 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Modal from "@/components/common/Modal";
 import useUserProfile from "@/hooks/useUserProfile";
 import Link from "next/link";
+import Image from "next/image";
 
 function Post() {
   const params = useParams<{ id: string }>();
@@ -69,6 +70,18 @@ function Post() {
       {post ? (
         <div className="p-8 flex justify-center min-h-screen">
           <article className="rounded-md border border-slate-200 bg-white py-8 max-w-3/4">
+            {post.image && (
+              <div className="w-full h-96 px-16 mb-8">
+                <Image
+                  src={"http://localhost:8000" + post.image}
+                  alt=""
+                  className="object-cover w-full h-full"
+                  height={800}
+                  width={1000}
+                  unoptimized
+                />
+              </div>
+            )}
             <div className="flex flex-col w-full gap-4 px-16">
               <div className="w-full flex items-center justify-between">
                 {post && (

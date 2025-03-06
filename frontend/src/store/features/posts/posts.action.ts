@@ -15,6 +15,7 @@ export const getPosts = () => ({
 
 export const createPost = (payload: {
   heading: string;
+  image: File | null;
   tags: number[];
   content: string;
 }) => ({
@@ -30,6 +31,7 @@ export const deletePost = (payload: { id: string }) => ({
 export const updatePost = (payload: {
   heading: string;
   content: string;
+  image: File | null;
   tags: number[];
   post_id: string;
 }) => ({

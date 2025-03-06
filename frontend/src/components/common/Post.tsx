@@ -7,13 +7,33 @@ import PostUserProfile from "./PostUserProfile";
 import Tag from "./Tag";
 import LikeBtn from "./LikeBtn";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
-const Post = ({ post }: { post: PostI }) => {
+const Post = ({
+  post,
+  displayImage = true,
+}: {
+  post: PostI;
+  displayImage?: boolean;
+}) => {
   const router = useRouter();
 
   return (
     <Link href={`/post/${post.id}`}>
       <article className="rounded-md border border-slate-200 bg-white flex flex-col gap-3 p-6">
+        {post.image && displayImage && (
+          <div className="w-full h-80 mb-3">
+            <Image
+              src={"http://localhost:8000" + post.image}
+              alt=""
+              className="object-cover w-full h-full"
+              height={800}
+              width={1000}
+              unoptimized
+            />
+          </div>
+        )}
+
         <PostUserProfile
           user_id={post.user.id}
           profile={post.user.profile.image}

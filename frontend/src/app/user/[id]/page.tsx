@@ -10,12 +10,14 @@ import { useSelector } from "react-redux";
 
 const UserProfilePage = () => {
   const params = useParams<{ id: string }>();
+  const authenticatedUser = useSelector((state: RootState) => state.auth.user);
   const user = useSelector((state: RootState) => state.users.users).find(
     (user) => user.id === Number(params.id)
   );
   const posts = useSelector((state: RootState) => state.posts.posts).filter(
     (post) => post.user.id === Number(params.id)
   );
+  const isEditable: boolean = authenticatedUser?.id === user?.id;
 
   const { Profile } = useUserProfile({
     profile: user?.profile.image ? user.profile.image : null,
@@ -31,6 +33,7 @@ const UserProfilePage = () => {
           <div className="rounded-md border border-slate-200 bg-white w-3/5 py-7 relative">
             <div className="w-full flex flex-col items-center gap-3 px-7">
               {Profile}
+              {isEditable ? "Owner" : "Other"}
               <h1 className="mt-3 text-3xl font-bold text-slate-900">
                 {user.username}
               </h1>
@@ -53,6 +56,7 @@ const UserProfilePage = () => {
             <div className="px-7 flex flex-col gap-5">
               <PostList
                 posts={posts}
+                postArgs={{ displayImage: false }}
                 noPosts={`The user '${user.username}' has no posts`}
               />
             </div>

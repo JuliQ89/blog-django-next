@@ -29,10 +29,24 @@ export function* watcherGetPostsSaga() {
 // CREATE_POST
 function* createPostSaga(action: any) {
   try {
+    const formData = new FormData();
+    formData.append("image", action.payload.image);
+    const payload = {
+      heading: action.payload.heading,
+      tags: action.payload.tags,
+      content: action.payload.content,
+    };
+    formData.append("payload", JSON.stringify(payload));
+
     const response: { data: {} } = yield call(
       axiosInstance.post,
       "/api/posts/",
-      action.payload
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     console.log(response.data);
     yield put(createPostSuccess(response.data));
@@ -85,13 +99,24 @@ export function* watcherUpdatePostLikedSaga() {
 // UPDATE_POST
 function* updatePostSaga(action: any) {
   try {
+    const formData = new FormData();
+    formData.append("image", action.payload.image);
+
+    const payload = {
+      heading: action.payload.heading,
+      content: action.payload.content,
+      tags: action.payload.tags,
+    };
+    formData.append("payload", JSON.stringify(payload));
+
     const response: { data: {} } = yield call(
-      axiosInstance.put,
+      axiosInstance.post,
       `/api/posts/${action.payload.post_id}/`,
+      formData,
       {
-        content: action.payload.content,
-        heading: action.payload.heading,
-        tags: action.payload.tags,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
     );
     console.log(response.data);

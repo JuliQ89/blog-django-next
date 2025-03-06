@@ -3,6 +3,7 @@
 import HeaderContentLayout from "@/components/layout/HeaderContentLayout";
 import { createPost } from "@/store/features/posts/posts.action";
 import { RootState } from "@/store/store";
+import Image from "next/image";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RichTextEditor } from "react-rich-text-editor-js";
@@ -15,10 +16,12 @@ const CreatePost = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([
     `#${tags[0]?.name}`,
   ]);
+  const [image, setImage] = useState<File | null>(null);
 
   const resetForm = () => {
     setTitle("");
     setContent("");
+    setImage(null);
     setSelectedTags([`#${tags[0]?.name}`]);
   };
 
@@ -26,6 +29,7 @@ const CreatePost = () => {
     dispatch(
       createPost({
         heading: title,
+        image: image,
         content: content,
         tags: tags
           .filter((tag) => selectedTags.includes(`#${tag.name}`))
@@ -35,10 +39,47 @@ const CreatePost = () => {
     resetForm();
   };
 
+  const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.[0]) return;
+    setImage(e.target.files[0]);
+  };
+
   return (
     <HeaderContentLayout headerProps={{ hasSearchBar: false }}>
       <div className="w-full p-6">
         <div className="flex flex-col gap-4 bg-white w-full p-5 rounded-[0.375rem] border border-gray-300">
+          <div className="w-full py-2 flex items-start justify-start gap-5">
+            {image && (
+              <div className="w-56 h-20 overflow-hidden">
+                <Image
+                  src={URL.createObjectURL(image)}
+                  alt=""
+                  className="object-cover"
+                  width={224}
+                  height={80}
+                  unoptimized
+                />
+              </div>
+            )}
+            <div className="flex items-center gap-2">
+              <label htmlFor="cover_image" className="btn-outlined">
+                {image ? "Change" : "Add a cover image"}
+              </label>
+              {image && (
+                <button className="btn-filled" onClick={() => setImage(null)}>
+                  Remove
+                </button>
+              )}
+              <input
+                type="file"
+                name="cover_image"
+                id="cover_image"
+                hidden
+                onChange={handleCoverImageChange}
+              />
+            </div>
+          </div>
+
           <div className="w-full flex flex-col gap-3 py-2">
             <textarea
               className="focus:outline-none placeholder:text-slate-700 placeholder:font-black placeholder:text-5xl text-5xl font-black text-slate-950 resize-none overflow-auto"

@@ -3,6 +3,7 @@
 import HeaderContentLayout from "@/components/layout/HeaderContentLayout";
 import { updatePost } from "@/store/features/posts/posts.action";
 import { RootState } from "@/store/store";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,12 +22,29 @@ const EditPost = () => {
   const [content, setContent] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [image, setImage] = useState<File | null>(null);
+
+  async function urlToFile(imageUrl: string): Promise<File> {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+
+    const fileName = imageUrl.split("/").pop() || "download.jpg";
+    const file = new File([blob], fileName, { type: blob.type });
+    return file;
+  }
 
   useEffect(() => {
     if (post) {
       setContent(post.content);
       setTitle(post.heading);
       setSelectedTags(post.tag.map((tag) => `#${tag.name}`));
+      if (post.image) {
+        urlToFile("http://localhost:8000" + post.image).then((file) => {
+          setImage(file);
+        });
+      } else {
+        setImage(null);
+      }
     }
   }, [post]);
 
@@ -35,6 +53,7 @@ const EditPost = () => {
       updatePost({
         heading: title,
         content: content,
+        image: image,
         tags: tags
           .filter((tag) => selectedTags.includes(`#${tag.name}`))
           .map((tag) => tag.id),
@@ -43,12 +62,52 @@ const EditPost = () => {
     );
   };
 
+  const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.[0]) return;
+    setImage(e.target.files[0]);
+  };
+
   return (
     <HeaderContentLayout headerProps={{ hasSearchBar: false }}>
       {post ? (
         isAuthor ? (
           <div className="w-full p-6">
             <div className="flex flex-col gap-4 bg-white w-full p-5 rounded-[0.375rem] border border-gray-300">
+              <div className="w-full py-2 flex items-start justify-start gap-5">
+                {image && (
+                  <div className="w-56 h-20 overflow-hidden">
+                    <Image
+                      src={URL.createObjectURL(image)}
+                      alt=""
+                      className="object-cover"
+                      width={224}
+                      height={80}
+                      unoptimized
+                    />
+                  </div>
+                )}
+                <div className="flex items-center gap-2">
+                  <label htmlFor="cover_image" className="btn-outlined">
+                    {image ? "Change" : "Add a cover image"}
+                  </label>
+                  {image && (
+                    <button
+                      className="btn-filled"
+                      onClick={() => setImage(null)}
+                    >
+                      Remove
+                    </button>
+                  )}
+                  <input
+                    type="file"
+                    name="cover_image"
+                    id="cover_image"
+                    hidden
+                    onChange={handleCoverImageChange}
+                  />
+                </div>
+              </div>
+
               <div className="w-full flex flex-col gap-3 py-2">
                 <textarea
                   className="focus:outline-none placeholder:text-slate-700 placeholder:font-black placeholder:text-5xl text-5xl font-black text-slate-950 resize-none overflow-auto"

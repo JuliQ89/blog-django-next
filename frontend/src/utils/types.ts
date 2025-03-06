@@ -36,6 +36,7 @@ export interface TagI {
 export interface PostI {
   user: UserI;
   tag: TagI[];
+  image: string | null;
   content: string;
   heading: string;
   created_at: string;

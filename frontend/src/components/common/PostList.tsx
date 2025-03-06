@@ -12,9 +12,12 @@ interface PostListI {
   posts?: PostI[];
   noPosts?: string;
   noPostBySearch?: string;
+  postArgs?: {
+    displayImage: boolean;
+  };
 }
 
-const PostList = ({ posts, noPosts, noPostBySearch }: PostListI) => {
+const PostList = ({ posts, noPosts, noPostBySearch, postArgs }: PostListI) => {
   const searchParams = useSearchParams();
   const searchValue = optimizeSearchValue(searchParams.get("search") || "");
   const defaultPosts = useSelector((state: RootState) => state.posts.posts);
@@ -33,7 +36,9 @@ const PostList = ({ posts, noPosts, noPostBySearch }: PostListI) => {
   return (
     <>
       {filteredPosts.length > 0 ? (
-        filteredPosts.map((post) => <Post key={post.id} post={post} />)
+        filteredPosts.map((post) => (
+          <Post key={post.id} post={post} {...postArgs} />
+        ))
       ) : searchValue === "" ? (
         <h1 className="text-slate-800 font-medium text-2xl text-center">
           {noPosts ? noPosts : <>There are no posts</>}

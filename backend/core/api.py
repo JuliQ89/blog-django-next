@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404
-from ninja import Router
+from ninja import Router, File, Form
+from ninja.files import UploadedFile
 from .models import Post, Tag, Comment
-from typing import List
+from typing import List, Optional
 from ninja_jwt.authentication import JWTAuth
 from .schemas import PostSchemaOut, PostSchemaIn, TagSchemaOut, CommentSchemaOut, CommentSchemaIn, CommentUpdateSchemaIn, PostUpdateSchemaIn
 import uuid
@@ -15,8 +16,10 @@ def getPosts(request):
     return Post.objects.all() 
 
 @post_router.post("/", response=PostSchemaOut, auth=JWTAuth())
-def createPost(request, payload: PostSchemaIn):
+def createPost(request, payload: PostSchemaIn, image: UploadedFile = File(None)):
     post = Post.objects.create(heading=payload.heading, content=payload.content, user=request.user)
+    if image:
+        post.image.save(image.name, image)
     for tag in payload.tags:
         post.tag.add(Tag.objects.get(id=tag))
     return post
@@ -30,12 +33,14 @@ def updatePostLiked(request, id:uuid.UUID):
         post.liked.add(request.user)
     return post
 
-@post_router.put("/{id}/", response=PostSchemaOut, auth=JWTAuth())
-def updatePost(request, payload: PostUpdateSchemaIn,id:uuid.UUID):
+@post_router.post("/{id}/", response=PostSchemaOut, auth=JWTAuth())
+def updatePost(request, id:uuid.UUID, payload: PostSchemaIn, image: UploadedFile = File(None)):
     post = get_object_or_404(Post, id=id)
     post.content = payload.content
     post.heading = payload.heading
     post.tag.clear()
+    if image:
+        post.image.save(image.name, image)
     for tag in payload.tags:
         post.tag.add(Tag.objects.get(id=tag))
     post.save()

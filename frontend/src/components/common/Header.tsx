@@ -107,7 +107,7 @@ const Header = ({ hasSearchBar = true }: HeaderI) => {
               <Link href="/new-post" className="btn-filled">
                 Create Post
               </Link>
-              {Profile}
+              <Link href={`/user/${user?.id}`}>{Profile}</Link>
             </>
           ) : (
             <>
