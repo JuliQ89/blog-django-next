@@ -3,7 +3,6 @@ import { useCallback } from "react";
 
 const useParams = () => {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
   const router = useRouter();
 
   const createQueryString = useCallback(
@@ -17,7 +16,7 @@ const useParams = () => {
   );
 
   return {
-    newQueryString(name: string, value: string) {
+    newQueryString(pathname: string, name: string, value: string) {
       router.push(pathname + "?" + createQueryString(name, value));
     },
   };

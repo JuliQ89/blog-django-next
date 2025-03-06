@@ -1,12 +1,16 @@
 from ninja import Schema
 from datetime import datetime
 from typing import List, Optional
-import uuid
 from accounts.schemas import UserSchemaOut
+from typing import Optional
+import uuid
 
 
 class RelationBIGINTSchema(Schema):
     id: int
+
+class OptionalRelationSchema(Schema):
+    id: Optional[int] = None
 
 class RelationUUIDSchema(Schema):
     id: uuid.UUID
@@ -45,15 +49,11 @@ class PostSchemaOut(Schema):
     likedCount: int
     liked: List[RelationBIGINTSchema]
     comments: List[CommentSchemaOut]
+    reading_list: List[UserSchemaOut]
     id: uuid.UUID
 
-class PostUpdateSchemaIn(Schema):
-    content: str
-    heading: str
-    tags: List[int]
 
 class PostSchemaIn(Schema):
     heading: str
     content: str
     tags: List[int]
-

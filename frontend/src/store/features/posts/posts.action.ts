@@ -4,6 +4,7 @@ export const postsActionTypes = {
   DELETE_POST: "DELETE_POST",
   UPDATE_POST: "UPDATE_POST",
   UPDATE_POST_LIKED: "UPDATE_POST_LIKED",
+  UPDATE_POST_ADDED_TO_READING_LIST: "UPDATE_POST_ADDED_TO_READING_LIST",
   CREATE_COMMENT: "CREATE_COMMENT",
   DELETE_COMMENT: "DELETE_COMMENT",
   UPDATE_COMMENT: "UPDATE_COMMENT",
@@ -41,6 +42,11 @@ export const updatePost = (payload: {
 
 export const updatePostLiked = (payload: { id: string }) => ({
   type: postsActionTypes.UPDATE_POST_LIKED,
+  payload,
+});
+
+export const updatePostAddedToReadingList = (payload: { id: string }) => ({
+  type: postsActionTypes.UPDATE_POST_ADDED_TO_READING_LIST,
   payload,
 });
 

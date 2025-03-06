@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tag, Post, Comment, ReadingList
+from .models import Tag, Post, Comment
 from unfold.admin import ModelAdmin
 
 
@@ -16,6 +16,3 @@ class TagAdminClass(ModelAdmin):
 class CommentAdminClass(ModelAdmin):
     pass
 
-@admin.register(ReadingList)
-class ReadingListAdminClass(ModelAdmin):
-    pass

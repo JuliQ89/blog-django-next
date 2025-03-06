@@ -1,10 +1,10 @@
 from django.shortcuts import get_object_or_404
-from ninja import Router, File, Form
+from ninja import Router, File
 from ninja.files import UploadedFile
 from .models import Post, Tag, Comment
-from typing import List, Optional
+from typing import List
 from ninja_jwt.authentication import JWTAuth
-from .schemas import PostSchemaOut, PostSchemaIn, TagSchemaOut, CommentSchemaOut, CommentSchemaIn, CommentUpdateSchemaIn, PostUpdateSchemaIn
+from .schemas import PostSchemaOut, PostSchemaIn, TagSchemaOut, CommentSchemaOut, CommentSchemaIn, CommentUpdateSchemaIn
 import uuid
 
 
@@ -31,6 +31,15 @@ def updatePostLiked(request, id:uuid.UUID):
         post.liked.remove(request.user)
     else:
         post.liked.add(request.user)
+    return post
+
+@post_router.put("/reading_list/{id}/", response=PostSchemaOut, auth=JWTAuth())
+def updatePostAddedToReadingList(request, id:uuid.UUID):
+    post = get_object_or_404(Post, id=id)
+    if request.user in post.reading_list.all():
+        post.reading_list.remove(request.user)
+    else:
+        post.reading_list.add(request.user)
     return post
 
 @post_router.post("/{id}/", response=PostSchemaOut, auth=JWTAuth())

@@ -48,7 +48,7 @@ const PostList = ({ posts, noPosts, noPostBySearch, postArgs }: PostListI) => {
           {noPostBySearch ? (
             noPostBySearch
           ) : (
-            <>The post '{searchValue}' was not found</>
+            <>No post or post with tag '{searchValue}' was not found</>
           )}
         </h1>
       )}

@@ -8,6 +8,8 @@ import Tag from "./Tag";
 import LikeBtn from "./LikeBtn";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { RiBookmarkLine } from "react-icons/ri";
+import BookmarkBtn from "./BookmarkBtn";
 
 const Post = ({
   post,
@@ -65,6 +67,8 @@ const Post = ({
             <AiOutlineComment size={25} />
             <span className="text-sm">{post.comments.length} Comments</span>
           </button>
+
+          <BookmarkBtn post={post} />
         </div>
       </article>
     </Link>

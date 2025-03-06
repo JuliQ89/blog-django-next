@@ -1,6 +1,5 @@
 import useParams from "@/hooks/useParams";
 import React from "react";
-import { useDispatch } from "react-redux";
 
 interface TagI {
   name: string;
@@ -9,7 +8,6 @@ interface TagI {
 
 const Tag = ({ name, id }: TagI) => {
   const { newQueryString } = useParams();
-  const dispatch = useDispatch();
 
   return (
     <small
@@ -17,7 +15,7 @@ const Tag = ({ name, id }: TagI) => {
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        newQueryString("search", name);
+        newQueryString("/", "search", name);
       }}
     >
       #{name}

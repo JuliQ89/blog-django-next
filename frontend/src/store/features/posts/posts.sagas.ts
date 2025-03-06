@@ -85,7 +85,6 @@ function* updatePostLikedSaga(action: any) {
       axiosInstance.put,
       `/api/posts/liked/${action.payload.id}/`
     );
-    console.log(response.data);
     yield put(updatePostSuccess(response.data));
   } catch (error) {
     console.log(error);
@@ -94,6 +93,26 @@ function* updatePostLikedSaga(action: any) {
 
 export function* watcherUpdatePostLikedSaga() {
   yield takeLatest(postsActionTypes.UPDATE_POST_LIKED, updatePostLikedSaga);
+}
+
+// UPDATE_POST_LIKED
+function* updatePostAddedToReadingListSaga(action: any) {
+  try {
+    const response: { data: {} } = yield call(
+      axiosInstance.put,
+      `/api/posts/reading_list/${action.payload.id}/`
+    );
+    yield put(updatePostSuccess(response.data));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* watcherUpdatePostAddedToReadingListSaga() {
+  yield takeLatest(
+    postsActionTypes.UPDATE_POST_ADDED_TO_READING_LIST,
+    updatePostAddedToReadingListSaga
+  );
 }
 
 // UPDATE_POST

@@ -17,6 +17,7 @@ import Modal from "@/components/common/Modal";
 import useUserProfile from "@/hooks/useUserProfile";
 import Link from "next/link";
 import Image from "next/image";
+import BookmarkBtn from "@/components/common/BookmarkBtn";
 
 function Post() {
   const params = useParams<{ id: string }>();
@@ -139,7 +140,12 @@ function Post() {
                 )}
               </div>
               <div className="flex flex-col w-full gap-1">
-                {post && <LikeBtn post={post} />}
+                {post && (
+                  <div className="flex items-center gap-4">
+                    <LikeBtn post={post} />
+                    <BookmarkBtn post={post} />
+                  </div>
+                )}
                 <h1 className="text-5xl font-bold text-slate-900">
                   {post?.heading}
                 </h1>

@@ -43,10 +43,6 @@ export interface PostI {
   likedCount: number;
   liked: { id: number }[];
   comments: CommentI[];
+  reading_list: UserI[];
   id: string;
-}
-
-export interface TagI {
-  name: string;
-  id: number;
 }
