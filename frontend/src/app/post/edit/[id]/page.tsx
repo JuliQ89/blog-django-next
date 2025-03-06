@@ -15,6 +15,7 @@ const EditPost = () => {
   const post = useSelector((state: RootState) => state.posts.posts).find(
     (post) => post.id === params.id
   );
+  const [spellCheck, setSpellCheck] = useState<boolean>(true);
   const tags = useSelector((state: RootState) => state.tags.tags);
   const user_id = useSelector((state: RootState) => state.auth.user?.id);
   const isAuthor = post?.user.id === user_id;
@@ -116,9 +117,33 @@ const EditPost = () => {
                   onChange={(e) => setTitle(e.target.value)}
                 ></textarea>
               </div>
+
+              <div className="w-full flex items-center gap-4">
+                <label
+                  className="inline-flex items-center cursor-pointer"
+                  htmlFor="spellcheck"
+                >
+                  <input
+                    type="checkbox"
+                    id="spellcheck"
+                    name="spellcheck"
+                    className="sr-only peer"
+                    checked={spellCheck}
+                    onChange={(e) => {
+                      setSpellCheck(e.target.checked);
+                    }}
+                  />
+                  <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                  <span className="ms-3 text-sm font-medium text-slate-900">
+                    Rechtschreibung {spellCheck ? "an" : "aus"}
+                  </span>
+                </label>
+              </div>
+
               <RichTextEditor
                 editorContent={content}
                 setEditorContent={setContent}
+                spellCheck={spellCheck}
                 height={"450px"}
                 maxHeight={"800px"}
               />
