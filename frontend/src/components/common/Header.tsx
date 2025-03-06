@@ -23,7 +23,7 @@ const HeaderSearchBar = () => {
         action="#"
         onSubmit={(e) => {
           e.preventDefault();
-          newQueryString("search", searchValue);
+          newQueryString("/", "search", searchValue);
         }}
       >
         <div className="relative w-full">
@@ -48,7 +48,7 @@ const HeaderSearchBar = () => {
         <button
           className="rounded-md ml-2 bg-slate-800 p-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="submit"
-          onClick={() => newQueryString("search", searchValue)}
+          onClick={() => newQueryString("/", "search", searchValue)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
