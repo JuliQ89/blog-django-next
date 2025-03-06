@@ -11,6 +11,13 @@ class Tag(models.Model):
         return self.name
 
 
+class ReadingList(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} - Reading List"
+
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="posts")
     tag = models.ManyToManyField(Tag)
@@ -19,6 +26,7 @@ class Post(models.Model):
     content = CKEditor5Field('Text', config_name='extends')
     created_at = models.DateTimeField(auto_now_add=True)
     liked = models.ManyToManyField(User, related_name="user_liked", null=True, blank=True)
+    reading_list = models.ForeignKey(ReadingList, on_delete=models.CASCADE, null=True, blank=True, related_name="reading_list_posts")
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     @property
