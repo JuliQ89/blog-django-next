@@ -47,7 +47,7 @@ const Comment = ({ comment }: { comment: CommentI }) => {
   };
 
   return (
-    <div className="w-full flex gap-3 items-start">
+    <div className="w-full flex gap-3 items-start" id={`${comment.id}`}>
       {Profile}
 
       <div className="rounded-md border border-slate-200 grow flex flex-col gap-2 p-5">

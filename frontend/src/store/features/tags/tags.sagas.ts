@@ -7,7 +7,6 @@ import { getTagsSuccess } from "./tags.slice";
 function* getTagsSaga() {
   try {
     const response: { data: {} } = yield call(axiosInstance.get, "/api/tags/");
-    console.log(response.data);
     yield put(getTagsSuccess(response.data));
   } catch (error) {
     console.log(error);

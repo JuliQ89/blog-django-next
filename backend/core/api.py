@@ -65,9 +65,9 @@ def deletePost(request, id:uuid.UUID):
 # Comment
 comment_router = Router(tags=["Comment"])
 
-@comment_router.get("/", response=List[CommentSchemaOut])
+@comment_router.get("/", response=List[CommentSchemaOut], auth=JWTAuth())
 def getComments(request):
-    return Comment.objects.all()
+    return Comment.objects.filter(user=request.user)[:10]
 
 @comment_router.post("/", response=CommentSchemaOut, auth=JWTAuth())
 def createComment(request, payload: CommentSchemaIn):

@@ -15,7 +15,6 @@ import {
 function* getPostsSaga() {
   try {
     const response: { data: {} } = yield call(axiosInstance.get, "/api/posts/");
-    console.log(response.data);
     yield put(getPostsSuccess(response.data));
   } catch (error) {
     console.log(error);

@@ -32,6 +32,7 @@ const Post = ({
               height={800}
               width={1000}
               unoptimized
+              priority
             />
           </div>
         )}
