@@ -52,7 +52,7 @@ const Login = () => {
                 htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
-                Your email
+                Email
               </label>
               <input
                 type="email"
@@ -97,7 +97,6 @@ const Login = () => {
                     aria-describedby="remember"
                     type="checkbox"
                     className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
-                    required={true}
                   />
                 </div>
                 <div className="ml-3 text-sm">

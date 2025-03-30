@@ -5,6 +5,7 @@ export interface UserI {
   is_staff: false;
   joined_at: string;
   is_authenticated: true;
+  email: string;
   profile: {
     image: string | null;
     bio: string;

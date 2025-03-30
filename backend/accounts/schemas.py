@@ -13,6 +13,7 @@ class UserSchemaOut(Schema):
     first_name: str 
     last_name: str
     is_staff: bool
+    email: str
     joined_at: datetime
     is_authenticated: bool
     profile: ProfileSchemaOut

@@ -4,8 +4,9 @@ import PostList from "@/components/common/PostList";
 import HeaderContentLayout from "@/components/layout/HeaderContentLayout";
 import useUserProfile from "@/hooks/useUserProfile";
 import { RootState } from "@/store/store";
+import Link from "next/link";
 import { useParams } from "next/navigation";
-import { RiCake2Fill } from "react-icons/ri";
+import { RiCake2Fill, RiEdit2Fill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 
 const UserProfilePage = () => {
@@ -31,9 +32,17 @@ const UserProfilePage = () => {
       {user ? (
         <div className="w-full h-full flex justify-center p-4 pt-14">
           <div className="rounded-md border border-slate-200 bg-white w-3/5 py-7 relative">
-            <div className="w-full flex flex-col items-center gap-3 px-7">
+            <div className="w-full flex flex-col items-center gap-3 px-7 relative">
+              {isEditable && (
+                <Link
+                  href={`/user/${user.id}/edit`}
+                  className="absolute top-0 right-7 border-none outline-none bg-transparent cursor-pointer text-slate-900 flex items-center justify-center gap-2 btn-filled"
+                >
+                  Edit Profile
+                  <RiEdit2Fill />
+                </Link>
+              )}
               {Profile}
-              {isEditable ? "Owner" : "Other"}
               <h1 className="mt-3 text-3xl font-bold text-slate-900">
                 {user.username}
               </h1>
